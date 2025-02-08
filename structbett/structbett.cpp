@@ -1,20 +1,37 @@
-﻿// structbett.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
-#include <iostream>
-
-int main()
-{
-    std::cout << "Hello World!\n";
+﻿#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+//n1
+struct Student {
+    string surname;
+    string group;
+    int grades[5];
+};
+void otlichniki(Student* students, int size) {
+    cout << "otlichniki:\n";
+    for (int i = 0; i < size; i++) {
+        int excellentCount = 0;
+        for (int grade : students[i].grades) if (grade == 5) excellentCount++;
+        if (excellentCount >= 4) cout << students[i].surname << " (" << students[i].group << ")\n";
+    }
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+void dvoechniki(Student* students, int size) {
+    cout << "dvoechniki:\n";
+    for (int i = 0; i < size; i++) {
+        int poorCount = 0;
+        for (int grade : students[i].grades) if (grade <= 3) poorCount++;
+        if (poorCount >= 3) cout << students[i].surname << " (" << students[i].group << ")\n";
+    }
+}
+int main() {
+    system("chcp 1251>nul");
+    int studentSize = 2;
+    Student* students = new Student[studentSize]{
+        {"Tuiakhov", "G2", {5, 5, 4, 5, 5}},
+        {"Bogomolenko", "T1", {1, 1, 1, 1, 1}}
+    };
+    otlichniki(students, studentSize);
+    dvoechniki(students, studentSize);
+    delete[] students;
+}
